@@ -16,16 +16,24 @@ int main()
 
         switch(opcion)
         {
-            case 1:
-                registrarProducto(inventario, &total);
-                break;
+          case 1:
+        registrarProducto(inventario, &total);
+        break;
 
-            case 8:
-                printf("Saliendo...\n");
-                break;
+    case 2:
+        listarProductos(inventario, total);
+        break;
 
-            default:
-                printf("Opcion no disponible aun.\n");
+    case 3:
+        buscarProducto(inventario, total);
+        break;
+
+    case 8:
+        printf("Saliendo...\n");
+        break;
+
+    default:
+        printf("Opcion no disponible aun.\n");
         }
 
     } while(opcion != 8);

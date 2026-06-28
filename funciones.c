@@ -24,6 +24,7 @@ int codigoExiste(Producto inventario[], int total, char codigo[])
             return 1;
         }
     }
+
     return 0;
 }
 
@@ -97,4 +98,110 @@ void registrarProducto(Producto inventario[], int *total)
     (*total)++;
 
     printf("Producto registrado correctamente.\n");
+}
+
+float calcularUtilidad(Producto p)
+{
+    return (p.precio_venta - p.precio_compra) * p.cantidad;
+}
+
+void listarProductos(Producto inventario[], int total)
+{
+    if(total == 0)
+    {
+        printf("\nNo hay productos registrados.\n");
+        return;
+    }
+
+    printf("\n================ INVENTARIO ================\n");
+
+    printf("%-10s %-20s %-15s %-10s %-10s %-10s %-10s\n",
+           "CODIGO",
+           "NOMBRE",
+           "CATEGORIA",
+           "COMPRA",
+           "VENTA",
+           "CANTIDAD",
+           "UTILIDAD");
+
+    for(int i = 0; i < total; i++)
+    {
+        printf("%-10s %-20s %-15s %-10.2f %-10.2f %-10d %-10.2f\n",
+               inventario[i].codigo,
+               inventario[i].nombre,
+               inventario[i].categoria,
+               inventario[i].precio_compra,
+               inventario[i].precio_venta,
+               inventario[i].cantidad,
+               calcularUtilidad(inventario[i]));
+    }
+}
+
+void buscarProducto(Producto inventario[], int total)
+{
+    int opcion;
+    int encontrado = 0;
+
+    printf("\n=== BUSCAR PRODUCTO ===\n");
+    printf("1. Buscar por codigo\n");
+    printf("2. Buscar por nombre\n");
+    printf("Seleccione una opcion: ");
+    scanf("%d", &opcion);
+
+    if(opcion == 1)
+    {
+        char codigo[16];
+
+        printf("Ingrese el codigo: ");
+        scanf("%15s", codigo);
+
+        for(int i = 0; i < total; i++)
+        {
+            if(strcmp(inventario[i].codigo, codigo) == 0)
+            {
+                printf("\nProducto encontrado\n");
+
+                printf("Codigo: %s\n", inventario[i].codigo);
+                printf("Nombre: %s\n", inventario[i].nombre);
+                printf("Categoria: %s\n", inventario[i].categoria);
+                printf("Precio compra: %.2f\n", inventario[i].precio_compra);
+                printf("Precio venta: %.2f\n", inventario[i].precio_venta);
+                printf("Cantidad: %d\n", inventario[i].cantidad);
+                printf("Utilidad: %.2f\n",
+                       calcularUtilidad(inventario[i]));
+
+                encontrado = 1;
+                break;
+            }
+        }
+    }
+    else if(opcion == 2)
+    {
+        char nombre[50];
+
+        printf("Ingrese parte del nombre: ");
+        scanf(" %49[^\n]", nombre);
+
+        for(int i = 0; i < total; i++)
+        {
+            if(strstr(inventario[i].nombre, nombre) != NULL)
+            {
+                printf("\nCodigo: %s\n", inventario[i].codigo);
+                printf("Nombre: %s\n", inventario[i].nombre);
+                printf("Categoria: %s\n", inventario[i].categoria);
+                printf("Precio compra: %.2f\n", inventario[i].precio_compra);
+                printf("Precio venta: %.2f\n", inventario[i].precio_venta);
+                printf("Cantidad: %d\n", inventario[i].cantidad);
+                printf("Utilidad: %.2f\n",
+                       calcularUtilidad(inventario[i]));
+
+                encontrado = 1;
+            }
+        }
+    }
+
+    if(!encontrado)
+    {
+        printf("\nProducto no encontrado.\n");
+    }
 }

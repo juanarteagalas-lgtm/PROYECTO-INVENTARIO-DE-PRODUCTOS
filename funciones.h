@@ -14,7 +14,12 @@ typedef struct
 } Producto;
 
 void mostrarMenu();
+
 void registrarProducto(Producto inventario[], int *total);
 int codigoExiste(Producto inventario[], int total, char codigo[]);
+
+float calcularUtilidad(Producto p);
+void listarProductos(Producto inventario[], int total);
+void buscarProducto(Producto inventario[], int total);
 
 #endif
